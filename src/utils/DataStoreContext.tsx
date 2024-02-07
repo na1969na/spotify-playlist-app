@@ -1,12 +1,13 @@
 import React, { FC, createContext, useReducer } from 'react'
 import { reducerCases } from './Constants';
-import { PlaylistData } from '../type/SpotifyApi';
+import { PlaylistData, UserInfo } from '../type/SpotifyApi';
 
 // useReducerで生成する「参照用のstate」の型
 type DataStore = {
   token: string;
   playlists: PlaylistData[];
   isHome: boolean;
+  userInfo: UserInfo;
 };
 
 // dispatch関数の第2引数に渡す「action」の型
@@ -15,6 +16,7 @@ type ReducerAction = {
   token: string;
   playlists: PlaylistData[];
   isHome: boolean;
+  userInfo: UserInfo;
 };
 
 // createContext()のデフォルト値オブジェクトにasで割り当てる
@@ -51,6 +53,11 @@ const initialState: DataStore = {
   token: "",
   playlists: [],
   isHome: true,
+  userInfo: {
+    userId: "",
+    userName: "",
+    userImage: ""
+  },
 };
 
 // childrenをpropsとして受け取るには明示的に型定義する

@@ -1,9 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { reducerCases } from "../utils/Constants";
-import styled from "styled-components";
 import { StoreContext } from "../utils/DataStoreContext";
 import { PlaylistData } from "../type/SpotifyApi";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Stack,
+} from "@chakra-ui/react";
+import { Search2Icon } from "@chakra-ui/icons";
+import { Card, CardBody, Image, Text } from "@chakra-ui/react";
 
 export default function Home() {
   const { state, dispatch } = useContext(StoreContext);
@@ -44,7 +55,8 @@ export default function Home() {
         type: reducerCases.SET_PLAYLISTS,
         token: state.token,
         playlists: playlists,
-        isHome: state.isHome
+        isHome: state.isHome,
+        userInfo: state.userInfo,
       });
     };
     getPlaylistData();
@@ -53,53 +65,80 @@ export default function Home() {
   const [searchName, setSearchName] = useState("");
 
   return (
-    <Container>
-      <div>
-        <input
-          type="text"
-          placeholder="playlist name"
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-      </div>
-      <ul>
-        {state.playlists
-        .map((playlist: any, id: number) => {
+    <div>
+      <Stack direction="row">
+        <InputGroup m={4} ml={50} size="lg">
+          <InputLeftElement
+            pointerEvents="none"
+            children={<Search2Icon color="#181818" />}
+          />
+          <Input
+            placeholder="playlist"
+            borderRadius={30}
+            border={"none"}
+            bgColor={"#f5f5f5"}
+            width={400}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+        </InputGroup>
+        <Avatar
+          m={4}
+          mr={6}
+          name={state.userInfo.userName}
+          src={state.userInfo.userImage}
+        />{" "}
+      </Stack>
+      <Flex gap={6} margin={10}>
+        {state.playlists.map((playlist: any, id: number) => {
           return (
-            <div key={id}>
-              <img src="playlist.image" alt="playlist"/>
-              <span>{playlist.name}</span>
-            </div>
+            <>
+              <Card maxW={60} maxH={80} bgColor={"#181818"}>
+                <CardBody>
+                  <Image
+                    src={playlist.image}
+                    alt="playlist"
+                    borderRadius="lg"
+                  />
+                  <Stack mt="6" spacing="3">
+                    <Heading fontSize={15} color={"#f5f5f5"}>
+                      {playlist.name}
+                    </Heading>
+                    <Text color={"#f5f5f5"}>作成者</Text>
+                  </Stack>
+                </CardBody>
+              </Card>
+            </>
           );
         })}
-      </ul>
-    </Container>
+      </Flex>
+    </div>
   );
 }
 
-const Container = styled.div`
-height:100%;
-overflow:hidden;
-ul{
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  height:52vh;
-  max-height:100%;
-  overflow:auto;
-  &::-webkit-scrollbar{
-    width: 0.7rem;
-    &-thumb{
-      background-color: rgba(255, 255, 255, 0.6);
-    }
-  }
-  li{
-    display:flex;
-    gap: 1rem;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    &:hover{
-      color: white;
-    }
-  }`;
+// const Container = styled.div`
+// height:100%;
+// overflow:hidden;
+// ul{
+//   list-style-type: none;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+//   padding: 1rem;
+//   height:52vh;
+//   max-height:100%;
+//   overflow:auto;
+//   &::-webkit-scrollbar{
+//     width: 0.7rem;
+//     &-thumb{
+//       background-color: rgba(255, 255, 255, 0.6);
+//     }
+//   }
+//   li{
+//     display:flex;
+//     gap: 1rem;
+//     cursor: pointer;
+//     transition: 0.3s ease-in-out;
+//     &:hover{
+//       color: white;
+//     }
+//   }`;

@@ -16,3 +16,9 @@ type TrackData =  {
   albumUri: string,
   trackNumber: number
 };
+
+export type UserInfo = {
+  userId: string,
+  userName: string,
+  userImage: string,
+}

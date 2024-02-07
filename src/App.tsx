@@ -14,7 +14,7 @@ function App() {
       const token = hash.substring(1).split('&')[0].split('=')[1];
       console.log(token);
       // useEffect関数内でAPIコール -> dispatchのpayloadに渡す
-      dispatch({ type: reducerCases.SET_TOKEN, token: token, playlists: [], isHome: true});
+      dispatch({ type: reducerCases.SET_TOKEN, token: token, playlists: [], isHome: true, userInfo:state.userInfo});
     }
   },[state.token, dispatch]);
 
