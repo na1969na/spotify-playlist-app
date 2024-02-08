@@ -4,34 +4,37 @@ import { MdMusicVideo } from "react-icons/md";
 import { StoreContext } from "../utils/DataStoreContext";
 import { reducerCases } from "../utils/Constants";
 
-export default function Sidebar() {
-  const { state, dispatch } = useContext(StoreContext);
-  
-  const changeMenu = (isHome: boolean) => {
-    dispatch({
-      type: reducerCases.SET_PLAYLISTS,
-      token: state.token,
-      playlists: state.playlists,
-      isHome: isHome,
-      userInfo: state.userInfo
-    });
-  };
-  return (
-      <div className="top_links">
-        <h1>Playlist</h1>
-        <ul>
-          <li onClick={() => changeMenu(true)}>
-            <MdHomeFilled />
-            <span>Home</span>
-          </li>
-          <li onClick={() => changeMenu(false)}>
-            <MdMusicVideo />
-            <span>Create New Playlist</span>
-          </li>
-        </ul>
-      </div>
-  );
-}
+export const Sidebar: React.FC = () => {
+  return <div></div>;
+};
+
+// export default function Sidebar() {
+  // const { state, dispatch } = useContext(StoreContext);
+  // const changeMenu = (isHome: boolean) => {
+  //   dispatch({
+  //     type: reducerCases.SET_PLAYLISTS,
+  //     token: state.token,
+  //     playlists: state.playlists,
+  //     isHome: isHome,
+  //     userInfo: state.userInfo
+  //   });
+  // };
+  // return (
+  //     <div className="top_links">
+  //       <h1>Playlist</h1>
+  //       <ul>
+  //         <li onClick={() => changeMenu(true)}>
+  //           <MdHomeFilled />
+  //           <span>Home</span>
+  //         </li>
+  //         <li onClick={() => changeMenu(false)}>
+  //           <MdMusicVideo />
+  //           <span>Create New Playlist</span>
+  //         </li>
+  //       </ul>
+  //     </div>
+  // );
+// }
 
 // const Container = styled.div`
 //   background-color: black;

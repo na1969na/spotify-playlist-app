@@ -1,5 +1,14 @@
 export const reducerCases = {
   SET_TOKEN: "SET_TOKEN",
   SET_PLAYLISTS: "SET_PLAYLISTS",
+  SET_PAGE: "SET_PAGE",
   SET_USER: "SET_USER",
+  SET_PLAYLIST_ID: "SET_PLAYLIST_ID",
+  SET_PLAYLIST: "SET_PLAYLIST",
+};
+
+export const pageCases = {
+  HOME_PAGE: "HOME_PAGE",
+  DETAIL_PAGE: "DETAIL_PAGE",
+  CREATE_PAGE: "CREATE_PAGE",
 };

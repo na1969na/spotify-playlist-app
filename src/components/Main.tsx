@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import Footer from "./Footer";
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
-import Body from "./Body";
+import { Sidebar } from "./Sidebar";
+import { Navbar } from "./Navbar";
+import {Body} from "./Body";
 import { StoreContext } from "../utils/DataStoreContext";
 import { reducerCases } from "../utils/Constants";
-import { UserInfo } from "../type/SpotifyApi";
+import { UserInfo } from "../types/SpotifyApi";
 import axios from "axios";
 
-export default function Spotify() {
+export const Main: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
 
   useEffect(() => {
@@ -27,14 +27,11 @@ export default function Spotify() {
       };
       dispatch({
         type: reducerCases.SET_USER,
-        token: state.token,
-        playlists: state.playlists,
-        isHome: state.isHome,
-        userInfo: userInfo,
+        payload: userInfo,
       });
     };
     getUserInfo();
-  }, [dispatch, state]);
+  }, [dispatch, state.token]);
 
   return (
     <Container>
@@ -52,7 +49,7 @@ export default function Spotify() {
       </div>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   max-width: 100vw;

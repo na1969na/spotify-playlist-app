@@ -2,11 +2,20 @@ export type PlaylistData =  {
   id: string,
   name: string,
   description: string,
+  owner: string,
   image: string,
-  tracks: TrackData,
 };
 
-type TrackData =  {
+export type PlaylistDetail = {
+  id: string,
+  name: string,
+  description: string,
+  owner: string,
+  image: string,
+  tracks: TrackData[]
+}
+
+export type TrackData =  {
   id: string,
   name: string,
   artists: string,
