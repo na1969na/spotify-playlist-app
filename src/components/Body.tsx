@@ -3,6 +3,7 @@ import { Home } from "./Home";
 import { StoreContext } from "../utils/DataStoreContext";
 import { Playlist } from "./Playlist";
 import { pageCases } from "../utils/Constants";
+import { CreatePlaylist } from "./CreatePlaylist";
 
 export const Body: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
@@ -14,7 +15,8 @@ export const Body: React.FC = () => {
           return <Home />;
         } else if (state.selectedPage === pageCases.DETAIL_PAGE) {
           return <Playlist />;
-        } else {
+        } else if (state.selectedPage === pageCases.CREATE_PAGE){
+          <CreatePlaylist />;
         }
       })()}
     </>

@@ -58,13 +58,13 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
     case reducerCases.SET_PLAYLIST_ID: {
       return {
         ...state,
-        userInfo: action.payload,
+        playlistId: action.payload,
       };
     }
     case reducerCases.SET_PLAYLIST: {
       return {
         ...state,
-        userInfo: action.payload,
+        playlistDetail: action.payload,
       };
     }
     default:

@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
       });
       dispatch({
         type: reducerCases.SET_PLAYLISTS,
-        payload: playlists
+        payload: playlists,
       });
     };
     getPlaylistData();
@@ -43,25 +43,27 @@ export const Home: React.FC = () => {
   const getPlaylistDetail = (id: string) => {
     dispatch({
       type: reducerCases.SET_PLAYLIST_ID,
-      payload: id
+      payload: id,
     });
     dispatch({
       type: reducerCases.SET_PAGE,
-      payload: pageCases.DETAIL_PAGE
+      payload: pageCases.DETAIL_PAGE,
     });
   };
 
   return (
     <Flex gap={6} margin={10}>
-      {state.playlists.map((playlist: PlaylistData, id: number) => {
+      {state.playlists.map((playlist: PlaylistData) => {
         return (
           <>
             <Card
+              key={""}
+              id={playlist.id}
               maxW={60}
               maxH={80}
               bgColor={"#181818"}
               onClick={() => getPlaylistDetail(playlist.id)}
-              _hover={{ bg: "gray.600" }}
+              _hover={{ cursor: 'pointer', opacity: '0.7' }}
             >
               <CardBody>
                 <Image src={playlist.image} alt="playlist" borderRadius="lg" />
@@ -69,7 +71,7 @@ export const Home: React.FC = () => {
                   <Heading fontSize={15} color={"#f5f5f5"}>
                     {playlist.name}
                   </Heading>
-                  <Text color={"#f5f5f5"}>{playlist.owner}</Text>
+                  <Text color={"gray.500"}>{playlist.owner}</Text>
                 </Stack>
               </CardBody>
             </Card>

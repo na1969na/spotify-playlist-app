@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import Login from './components/Login';
+import {Login} from './components/Login';
 import { reducerCases } from './utils/Constants';
 import { Main } from './components/Main';
 import { StoreContext } from './utils/DataStoreContext';

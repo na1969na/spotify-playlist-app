@@ -3,7 +3,7 @@ import { StoreContext } from "../utils/DataStoreContext";
 import axios from "axios";
 import { PlaylistDetail, TrackData } from "../types/SpotifyApi";
 import { pageCases, reducerCases } from "../utils/Constants";
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, Box, Image } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 
 export const Playlist: React.FC = () => {
@@ -29,14 +29,14 @@ export const Playlist: React.FC = () => {
         image: response.data.images[0].url,
         owner: response.data.owner.display_name,
         tracks: response.data.tracks.items.map((track: any) => ({
-          id: track.id,
-          name: track.name,
-          artists: track.artists.map((artist: any) => artist.name),
-          image: track.album.images[2].url,
-          duration: track.duration_ms,
-          album: track.album.name,
-          context_uri: track.album.uri,
-          track_number: track.track_number,
+          id: track.track.id,
+          name: track.track.name,
+          artists: track.track.artists.map((artist: any) => artist.name),
+          image: track.track.album.images[2].url,
+          duration: track.track.duration_ms,
+          album: track.track.album.name,
+          context_uri: track.track.album.uri,
+          track_number: track.track.track_number,
         })),
       };
       dispatch({ type: reducerCases.SET_PLAYLIST, payload: selectedPlaylist });
@@ -55,7 +55,12 @@ export const Playlist: React.FC = () => {
         icon={<ChevronLeftIcon />}
         onClick={clickBackBtn}
       />
-
+      <Box>
+        <Image src={state.playlistDetail.image} alt="playlist" />
+        <Box>{state.playlistDetail.name}</Box>
+        <Box>{state.playlistDetail.description}</Box>
+        <Box>{state.playlistDetail.owner}</Box>
+      </Box>
     </div>
   );
 };

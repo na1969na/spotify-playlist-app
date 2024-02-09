@@ -2,69 +2,41 @@ import React, { useContext } from "react";
 import { MdHomeFilled } from "react-icons/md";
 import { MdMusicVideo } from "react-icons/md";
 import { StoreContext } from "../utils/DataStoreContext";
-import { reducerCases } from "../utils/Constants";
+import { pageCases, reducerCases } from "../utils/Constants";
+import { Box, VStack, Text, HStack } from "@chakra-ui/react";
 
 export const Sidebar: React.FC = () => {
-  return <div></div>;
+  const { state, dispatch } = useContext(StoreContext);
+
+  const clickMenu = (item: string) => {
+    dispatch({
+      type: reducerCases.SET_PAGE,
+      payload: item,
+    });
+  };
+
+  return (
+    <VStack
+      bgColor={"blackAlpha.600"}
+      borderRadius={10}
+      m={1}
+      color={"#f5f5f5"}
+    >
+      <Box>
+        <Text fontSize="lg">PLAYLIST</Text>
+      </Box>
+      <Box _hover={{ bg: "black" }} cursor={"pointer"} w={"100%"}>
+        <HStack onClick={() => clickMenu(pageCases.HOME_PAGE)}>
+          <MdHomeFilled />
+          <Text>Home</Text>
+        </HStack>
+      </Box>
+      <Box _hover={{ bg: "black" }} cursor={"pointer"} w={"100%"}>
+        <HStack onClick={() => clickMenu(pageCases.CREATE_PAGE)}>
+          <MdMusicVideo />
+          <Text>Create New Playlist</Text>
+        </HStack>
+      </Box>
+    </VStack>
+  );
 };
-
-// export default function Sidebar() {
-  // const { state, dispatch } = useContext(StoreContext);
-  // const changeMenu = (isHome: boolean) => {
-  //   dispatch({
-  //     type: reducerCases.SET_PLAYLISTS,
-  //     token: state.token,
-  //     playlists: state.playlists,
-  //     isHome: isHome,
-  //     userInfo: state.userInfo
-  //   });
-  // };
-  // return (
-  //     <div className="top_links">
-  //       <h1>Playlist</h1>
-  //       <ul>
-  //         <li onClick={() => changeMenu(true)}>
-  //           <MdHomeFilled />
-  //           <span>Home</span>
-  //         </li>
-  //         <li onClick={() => changeMenu(false)}>
-  //           <MdMusicVideo />
-  //           <span>Create New Playlist</span>
-  //         </li>
-  //       </ul>
-  //     </div>
-  // );
-// }
-
-// const Container = styled.div`
-//   background-color: black;
-//   color: #b3b3b3;
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-//   width: 100%;
-//   .top_links {
-//     display: flex;
-//     flex-direction: column;
-//     .logo {
-//       text-align: center;
-//       margin: 1rem 0;
-//     }
-//     ul {
-//       list-style: none;
-//       display: flex;
-//       flex-direction: column;
-//       gap: 1rem;
-//       padding: 1rem;
-//       li {
-//         display: flex;
-//         gap: 1rem;
-//         cursor: pointer;
-//         transition: 0.3s ease-in-out;
-//         &:hover {
-//           color: white;
-//         }
-//       }
-//     }
-//   }
-// `;

@@ -18,7 +18,7 @@ export type PlaylistDetail = {
 export type TrackData =  {
   id: string,
   name: string,
-  artists: string,
+  artists: any,
   image: string,
   duration: number,
   albumName: string,
