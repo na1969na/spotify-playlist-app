@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
+  Box,
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
+  Spacer,
   Stack,
 } from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, Search2Icon } from "@chakra-ui/icons";
 import { StoreContext } from "../utils/DataStoreContext";
 import { PlaylistData } from "../types/SpotifyApi";
 import { pageCases, reducerCases } from "../utils/Constants";
@@ -37,6 +40,10 @@ export const Navbar: React.FC = () => {
     dispatch({ type: reducerCases.SET_PLAYLISTS, payload: searchedItems });
   };
 
+  const clickBackBtn = () => {
+    dispatch({ type: reducerCases.SET_PAGE, payload: pageCases.HOME_PAGE });
+  };
+
   return (
     <Stack direction="row">
       {(() => {
@@ -58,8 +65,23 @@ export const Navbar: React.FC = () => {
               />
             </InputGroup>
           );
+        } else if (state.selectedPage === pageCases.DETAIL_PAGE) {
+          return (
+            <IconButton
+              aria-label="Back to Home"
+              icon={<ChevronLeftIcon />}
+              onClick={clickBackBtn}
+              bg={"#181818"}
+              w={10}
+              h={8}
+              color={"#f5f5f5"}
+              m={4}
+              _hover={{ opacity: "0.8" }}
+            />
+          );
         }
       })()}
+      <Spacer />
       <Avatar
         m={4}
         mr={6}
