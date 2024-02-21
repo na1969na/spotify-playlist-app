@@ -63,7 +63,7 @@ export const Home: React.FC = () => {
               maxH={80}
               bgColor={"#181818"}
               onClick={() => getPlaylistDetail(playlist.id)}
-              _hover={{ cursor: 'pointer', opacity: '0.7' }}
+              _hover={{ cursor: "pointer", opacity: "0.7" }}
             >
               <CardBody>
                 <Image src={playlist.image} alt="playlist" borderRadius="lg" />

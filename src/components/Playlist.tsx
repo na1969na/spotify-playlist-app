@@ -40,7 +40,7 @@ export const Playlist: React.FC = () => {
           artists: track.track.artists.map((artist: any) => artist.name),
           image: track.track.album.images[2].url,
           duration: track.track.duration_ms,
-          album: track.track.album.name,
+          albumName: track.track.album.name,
           context_uri: track.track.album.uri,
           track_number: track.track.track_number,
         })),

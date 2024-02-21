@@ -1,15 +1,16 @@
 import React from "react";
 import {
-  VStack,
   Box,
   Button,
-  HStack,
-  Center,
-  Container,
+  ButtonGroup,
   Flex,
   Heading,
+  IconButton,
+  Stack,
+  Text,
+  chakra,
 } from "@chakra-ui/react";
-import { ImHeadphones } from "react-icons/im";
+import { FaGithub, FaLinkedin, FaSpotify } from "react-icons/fa";
 
 export const Login: React.FC = () => {
   const handleClick = () => {
@@ -33,53 +34,51 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <>
-      <Box px={4} bgColor="black" h={100}>
-        <Container maxW="container.lg">
-          <Flex
-            as="header"
-            py="4"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Heading as="h1" fontSize="2xl" cursor="pointer">
-              Next.js microCMS Blog
-            </Heading>
-          </Flex>
-        </Container>
+    <Flex
+      flexDirection="column"
+      width="100wh"
+      height="100vh"
+      bgGradient="linear(to-b, black, gray.700)"
+    >
+      <Box minW={{ base: "90%", md: "768px" }}>
+        <Stack spacing={6} p="10.1rem" borderRadius={10} align={"center"}>
+          <Heading color={"blue.300"} fontSize={100}>
+            Fun Mix
+          </Heading>
+          <Text color={"white"} fontWeight={"bold"} fontSize={30}>
+            with Spotify API.
+          </Text>
+          <Text color={"white"} fontWeight={"bold"}>
+            Create Playlist!!
+          </Text>
+          <Button h={70} w={80} borderRadius={40} onClick={handleClick} leftIcon={<FaSpotify />}>
+            Connect Spotify
+          </Button>
+        </Stack>
       </Box>
-      <Box bg="gray.700" w="100%" h="100%" p={4} color="white">
-        <Button h={70} w={80} borderRadius={40} onClick={handleClick}>
-          Connect Spotify
-        </Button>
+      <Box minW={{ base: "90%", md: "768px" }} color={"white"}>
+        <Stack spacing={4} p="1.5rem" align={"center"} backgroundColor="#181818">
+          <Stack justify="space-between" direction="row" align="center">
+            <ButtonGroup variant="tertiary">
+              <IconButton
+                as="a"
+                href="#"
+                aria-label="LinkedIn"
+                icon={<FaLinkedin />}
+              />
+              <IconButton
+                as="a"
+                href="#"
+                aria-label="GitHub"
+                icon={<FaGithub />}
+              />
+            </ButtonGroup>
+          </Stack>
+          <Text fontSize="sm" color="fg.subtle">
+            &copy; {new Date().getFullYear()} Nana Okamoto
+          </Text>
+        </Stack>
       </Box>
-    </>
-
-    // <VStack
-    // justify={"center"}
-    //   bg={"#e5e5f7"}
-    //   w={"100vw"}
-    //   h={"100vh"}
-    //   opacity={0.7}
-    //   // backgroundImage={
-    //   //   "radial-gradient(circle at center center, #0a677c, #e5e5f7), repeating-radial-gradient(circle at center center, #0a677c, #0a677c 20px, transparent 40px, transparent 20px)"
-    //   // }
-    //   backgroundBlendMode={"multiply"}
-    // >
-    //   <VStack>
-    //         <HStack
-    //           mt={1}
-    //           fontSize={100}
-    //           color={"yellow.200"}
-    //           fontWeight={"bold"}
-    //         >
-    //           <ImHeadphones />
-    //           <Box>Fun Mix</Box>
-    //         </HStack>
-    //         <Button h={70} w={80} borderRadius={40} onClick={handleClick}>
-    //           Connect Spotify
-    //         </Button>
-    //   </VStack>
-    // </VStack>
+    </Flex>
   );
 };
