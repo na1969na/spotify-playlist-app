@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Home } from "./Home";
 import { StoreContext } from "../utils/DataStoreContext";
 import { Playlist } from "./Playlist";
 import { pageCases } from "../utils/Constants";
@@ -10,15 +9,14 @@ export const Body: React.FC = () => {
 
   return (
     <>
-      {(() => {
-        if (state.selectedPage === pageCases.HOME_PAGE) {
-          return <Home />;
-        } else if (state.selectedPage === pageCases.DETAIL_PAGE) {
+    <CreatePlaylist />;
+      {/* {(() => {
+        if (state.selectedPage === pageCases.DETAIL_PAGE) {
           return <Playlist />;
-        } else if (state.selectedPage === pageCases.CREATE_PAGE){
+        } else if (state.selectedPage === pageCases.CREATE_PAGE) {
           <CreatePlaylist />;
         }
-      })()}
+      })()} */}
     </>
   );
 };

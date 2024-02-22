@@ -67,6 +67,12 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
         playlistDetail: action.payload,
       };
     }
+    // case reducerCases.SET_SEARCHED_PLAYLIST: {
+    //   return {
+    //     ...state,
+    //     searchedPlaylists: action.payload,
+    //   };
+    // }
     default:
       return state;
   }
@@ -88,6 +94,7 @@ const initialState: DataStore = {
     description: "",
     owner: "",
     image: "",
+    total:0,
     tracks: [],
   },
 };

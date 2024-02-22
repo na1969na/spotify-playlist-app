@@ -1,16 +1,7 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
-import styled from "styled-components";
 
-export default function Footer(){
-  return(
-    <Container></Container>
+export const Footer: React.FC = () => {
+  return <Box bg={"#181818"} h={"100%"}></Box>;
+};
 
-  );
-}
-
-const Container = styled.div`
-  background-color: #181818;
-  height: 100%;
-
-
-`;

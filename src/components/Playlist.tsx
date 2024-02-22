@@ -34,6 +34,7 @@ export const Playlist: React.FC = () => {
           : response.data.description,
         image: response.data.images[0].url,
         owner: response.data.owner.display_name,
+        total:response.data.total,
         tracks: response.data.tracks.items.map((track: any) => ({
           id: track.track.id,
           name: track.track.name,
@@ -66,7 +67,7 @@ export const Playlist: React.FC = () => {
           borderRadius={5}
         />
         <VStack>
-          <Box fontSize={20}>プレイリスト</Box>
+          <Box fontSize={20}>Playlist</Box>
           <Box fontSize={60}>{state.playlistDetail.name}</Box>
           <Box fontSize={20}>{state.playlistDetail.description}</Box>
           <HStack>
@@ -77,7 +78,7 @@ export const Playlist: React.FC = () => {
               src={state.userInfo.userImage}
             />{" "}
             <Box fontSize={20}>{state.playlistDetail.owner}</Box>
-            <Box fontSize={20}>曲数</Box>
+            <Box fontSize={20}>{state.playlistDetail.total}</Box>
             <Box fontSize={20}>総合時間</Box>
           </HStack>
         </VStack>

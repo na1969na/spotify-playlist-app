@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import Footer from "./Footer";
+import { Footer } from "./Footer";
 import { Sidebar } from "./Sidebar";
 import { Navbar } from "./Navbar";
-import {Body} from "./Body";
+import { Body } from "./Body";
 import { StoreContext } from "../utils/DataStoreContext";
 import { reducerCases } from "../utils/Constants";
 import { UserInfo } from "../types/SpotifyApi";

@@ -8,7 +8,6 @@ import {
   IconButton,
   Stack,
   Text,
-  chakra,
 } from "@chakra-ui/react";
 import { FaGithub, FaLinkedin, FaSpotify } from "react-icons/fa";
 

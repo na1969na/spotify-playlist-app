@@ -3,6 +3,7 @@ import {Login} from './components/Login';
 import { reducerCases } from './utils/Constants';
 import { Main } from './components/Main';
 import { StoreContext } from './utils/DataStoreContext';
+import './style.css';
 
 function App() {
   const { state, dispatch } = useContext(StoreContext);
