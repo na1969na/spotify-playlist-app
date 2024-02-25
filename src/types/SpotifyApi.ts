@@ -1,6 +1,7 @@
 export type PlaylistData =  {
   id: string,
   name: string,
+  image: string
 };
 
 export type PlaylistDetail = {
@@ -9,7 +10,6 @@ export type PlaylistDetail = {
   description: string,
   owner: string,
   image: string,
-  total: number,
   tracks: TrackData[]
 }
 

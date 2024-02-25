@@ -1,29 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../utils/DataStoreContext";
 import { pageCases, reducerCases } from "../utils/Constants";
-import {
-  Box,
-  Text,
-  HStack,
-  Flex,
-  Stack,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  IconButton,
-} from "@chakra-ui/react";
+import { Box, Text, HStack, Flex, Stack, Image } from "@chakra-ui/react";
 import axios from "axios";
 import { PlaylistData } from "../types/SpotifyApi";
-import { Search2Icon, AddIcon } from "@chakra-ui/icons";
 import { SearchInput } from "./SearchInput";
+import { VscLibrary } from "react-icons/vsc";
+import { IoAdd } from "react-icons/io5";
 
 export const Sidebar: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
-  const [inputValue, setInputValue] = useState("");
-  const [showPlaylists, setShowPlaylists] = useState<PlaylistData[]>([]);
+  const [playlists, setPlaylists] = useState<PlaylistData[]>([]);
 
   useEffect(() => {
-    const getPlaylistData = async () => {
+    const getPlaylists = async () => {
       const response = await axios.get(
         "https://api.spotify.com/v1/me/playlists",
         {
@@ -38,52 +28,28 @@ export const Sidebar: React.FC = () => {
         return {
           id: data.id,
           name: data.name,
+          image: data.images[0].url,
         };
       });
-      setShowPlaylists(playlists);
       dispatch({
         type: reducerCases.SET_PLAYLISTS,
         payload: playlists,
       });
+      setPlaylists(playlists);
     };
-    getPlaylistData();
+    getPlaylists();
+    setPlaylists(state.playlists);
 
     if (state.playlists.length > 0) {
       getPlaylistDetail(state.playlists[0].id);
     }
   }, [dispatch, state.playlists, state.token]);
 
-  const getPlaylistDetail = (id: string) => {
+  const getPlaylistDetail = (id: string) =>
     dispatch({
       type: reducerCases.SET_PLAYLIST_ID,
       payload: id,
     });
-    dispatch({
-      type: reducerCases.SET_PAGE,
-      payload: pageCases.DETAIL_PAGE,
-    });
-  };
-
-  const handleInputChange = (e: any) => {
-    setInputValue(e.target.value);
-    checkInputValue(e.target.value);
-  };
-
-  const checkInputValue = (value: string) => {
-    if (value === "") {
-      return;
-    }
-
-    const searchedItems: PlaylistData[] = state.playlists.filter(
-      (playlist) =>
-        playlist.name !== undefined &&
-        playlist.name !== null &&
-        playlist.name.toUpperCase().indexOf(value.toUpperCase()) !== -1
-    );
-    setShowPlaylists(searchedItems);
-  };
-
-  const showAllPlaylists = () => setShowPlaylists(state.playlists);
 
   const createPlaylist = () =>
     dispatch({
@@ -94,8 +60,8 @@ export const Sidebar: React.FC = () => {
   return (
     <Flex
       flexDirection="column"
-      width="100wh"
-      height="100vh"
+      width="100%"
+      height="100%"
       bgColor={"blackAlpha.600"}
       color={"white"}
       fontWeight={"semibold"}
@@ -104,31 +70,44 @@ export const Sidebar: React.FC = () => {
         <Stack p="1rem" borderBottom={"0.1px solid"}>
           <Text>Fun Mix</Text>
         </Stack>
-        <HStack>
+        <HStack p="1rem">
+          <VscLibrary />
           <Text>My Library</Text>
-          <IconButton
-            aria-label={"Create playlist"}
-            icon={<AddIcon />}
-            borderRadius={100}
-            onClick={createPlaylist}
-          />
+        </HStack>
+        <HStack
+          borderRadius={5}
+          p="0.5rem"
+          mb={2}
+          _hover={{ cursor: "pointer", bg: "whiteAlpha.200" }}
+          onClick={createPlaylist}
+        >
+          <IoAdd size={"10%"} />
+          <Text>Create a new playlist</Text>
         </HStack>
         <Stack>
-          <SearchInput />
+          <SearchInput setPlaylists={setPlaylists} />
         </Stack>
-        {showPlaylists.map((playlist: PlaylistData) => {
-          return (
-            <HStack
-              p="1rem"
-              borderRadius={10}
-              cursor={"pointer"}
-              onClick={() => getPlaylistDetail(playlist.id)}
-              _hover={{ fontWeight: "bold" }}
-            >
-              <Text>{playlist.name}</Text>
-            </HStack>
-          );
-        })}
+        <Box height="59%" overflowY={"auto"} mt={3}>
+          {playlists.map((playlist: PlaylistData) => {
+            return (
+              <HStack
+                borderRadius={5}
+                p="0.5rem"
+                _hover={{ cursor: "pointer", bg: "whiteAlpha.200" }}
+                onClick={() => getPlaylistDetail(playlist.id)}
+              >
+                <Image
+                  src={playlist.image}
+                  alt="Playlist"
+                  boxSize="50px"
+                  objectFit="cover"
+                  borderRadius={3}
+                />
+                <Text>{playlist.name}</Text>
+              </HStack>
+            );
+          })}
+        </Box>
       </Box>
     </Flex>
   );

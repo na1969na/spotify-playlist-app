@@ -9,14 +9,13 @@ export const Body: React.FC = () => {
 
   return (
     <>
-    <CreatePlaylist />;
-      {/* {(() => {
-        if (state.selectedPage === pageCases.DETAIL_PAGE) {
+      {(() => {
+        if (state.selectedPage === pageCases.PLAYLIST_PAGE) {
           return <Playlist />;
         } else if (state.selectedPage === pageCases.CREATE_PAGE) {
-          <CreatePlaylist />;
+          return <CreatePlaylist />;
         }
-      })()} */}
+      })()}
     </>
   );
 };

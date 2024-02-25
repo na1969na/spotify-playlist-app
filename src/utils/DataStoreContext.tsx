@@ -67,12 +67,6 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
         playlistDetail: action.payload,
       };
     }
-    // case reducerCases.SET_SEARCHED_PLAYLIST: {
-    //   return {
-    //     ...state,
-    //     searchedPlaylists: action.payload,
-    //   };
-    // }
     default:
       return state;
   }
@@ -81,7 +75,7 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
 const initialState: DataStore = {
   token: "",
   playlists: [],
-  selectedPage: pageCases.HOME_PAGE,
+  selectedPage: pageCases.PLAYLIST_PAGE,
   userInfo: {
     userId: "",
     userName: "",
@@ -94,7 +88,6 @@ const initialState: DataStore = {
     description: "",
     owner: "",
     image: "",
-    total:0,
     tracks: [],
   },
 };

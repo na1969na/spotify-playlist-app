@@ -13,7 +13,7 @@ import { FaGithub, FaLinkedin, FaSpotify } from "react-icons/fa";
 
 export const Login: React.FC = () => {
   const handleClick = () => {
-    const clientId = "d2fc00e4d08146b4923d5957d0889ac5";
+    const clientId = "0881c352589549778c0a825a69a6ebea";
     const redirectUrl = "http://localhost:3000/";
     const apiUrl = "https://accounts.spotify.com/authorize";
     const scope = [

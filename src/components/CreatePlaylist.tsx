@@ -21,15 +21,15 @@ export const CreatePlaylist: React.FC = () => {
   return (
     <Flex
       flexDirection="column"
-      width="100wh"
-      height="100vh"
+      width="100%"
+      height="100%"
       color={"white"}
       fontWeight={"semibold"}
     >
       <Playlist />
       <Box bgColor={"blackAlpha.700"} width="100wh" height="100vh">
         <Tabs position="relative" variant="unstyled" isLazy>
-          <TabList>
+          <TabList fontWeight={"bold"}>
             <Tab>Search</Tab>
             <Tab>Recommended</Tab>
           </TabList>
@@ -44,7 +44,7 @@ export const CreatePlaylist: React.FC = () => {
               <SearchTab />
             </TabPanel>
             <TabPanel>
-              <RecommendedTab />
+              <RecommendedTab addedTracks={[]}/>
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -8,7 +8,6 @@ export const reducerCases = {
 };
 
 export const pageCases = {
-  HOME_PAGE: "HOME_PAGE",
-  DETAIL_PAGE: "DETAIL_PAGE",
+  PLAYLIST_PAGE: "PLAYLIST_PAGE",
   CREATE_PAGE: "CREATE_PAGE",
 };

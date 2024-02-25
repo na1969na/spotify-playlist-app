@@ -4,19 +4,32 @@ import axios from "axios";
 import { PlaylistDetail, TrackData } from "../types/SpotifyApi";
 import { reducerCases } from "../utils/Constants";
 import {
-  IconButton,
   Box,
   Image,
   HStack,
   VStack,
   Avatar,
+  Button,
+  IconButton,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
+import { ItemTable } from "./ItemTable";
+import { FaPlay } from "react-icons/fa";
+import { RecommendedTab } from "./RecommendedTab";
+import { SearchTab } from "./SearchTab";
 
 export const Playlist: React.FC = () => {
   const { state, dispatch } = useContext(StoreContext);
 
   useEffect(() => {
     const getPlaylist = async () => {
+      if(state.playlistId === "") return;
+      
       const response = await axios.get(
         `https://api.spotify.com/v1/playlists/${state.playlistId}`,
         {
@@ -26,6 +39,7 @@ export const Playlist: React.FC = () => {
           },
         }
       );
+
       const selectedPlaylist: PlaylistDetail = {
         id: response.data.id,
         name: response.data.name,
@@ -34,7 +48,6 @@ export const Playlist: React.FC = () => {
           : response.data.description,
         image: response.data.images[0].url,
         owner: response.data.owner.display_name,
-        total:response.data.total,
         tracks: response.data.tracks.items.map((track: any) => ({
           id: track.track.id,
           name: track.track.name,
@@ -51,57 +64,67 @@ export const Playlist: React.FC = () => {
     getPlaylist();
   }, [state.token, dispatch, state.playlistId]);
 
-  const msToMinutesAndSeconds = (ms: number) => {
-    var minutes = Math.floor(ms / 60000);
-    var seconds: string = ((ms % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (Number(seconds) < 10 ? "0" : "") + seconds;
-  };
-
   return (
-    <Box color={"#f5f5f5"} ml={6} mr={6} mb={30}>
-      <HStack>
-        <Image
-          src={state.playlistDetail.image}
-          alt="playlist"
-          w={230}
-          borderRadius={5}
-        />
-        <VStack>
-          <Box fontSize={20}>Playlist</Box>
-          <Box fontSize={60}>{state.playlistDetail.name}</Box>
-          <Box fontSize={20}>{state.playlistDetail.description}</Box>
-          <HStack>
-            <Avatar
-              m={4}
-              mr={6}
-              name={state.userInfo.userName}
-              src={state.userInfo.userImage}
-            />{" "}
-            <Box fontSize={20}>{state.playlistDetail.owner}</Box>
-            <Box fontSize={20}>{state.playlistDetail.total}</Box>
-            <Box fontSize={20}>総合時間</Box>
-          </HStack>
-        </VStack>
-      </HStack>
-      <HStack borderBottom={"0.1px solid"}>
-        <Box>#</Box>
-        <Box>Title</Box>
-        <Box>Artist</Box>
-        <Box>Album</Box>
-        <Box>Time</Box>
-      </HStack>
-      {state.playlistDetail.tracks.map((track: TrackData, index: number) => {
-        return (
-          <HStack _hover={{ bg: "whiteAlpha.200" }} >
-            <Box>{index + 1}</Box>
-            <Image src={track.image} alt="track" />
-            <Box>{track.name}</Box>
-            <Box>{track.artists.join(",")}</Box>
-            <Box>{track.albumName}</Box>
-            <Box>{msToMinutesAndSeconds(track.duration)}</Box>
-          </HStack>
-        );
-      })}
+    <Box>
+      <Box color={"#f5f5f5"} ml={6} mr={6} mb={8}>
+        <HStack>
+          <Image
+            src={state.playlistDetail.image}
+            alt="playlist"
+            w={230}
+            borderRadius={5}
+          />
+          <VStack ml={4} alignItems={"flexStart"} fontSize={15}>
+            <Box fontSize={80} fontWeight={"bold"}>
+              {state.playlistDetail.name}
+            </Box>
+            <Box color={"blue.100"}>{state.playlistDetail.description}</Box>
+            <HStack>
+              <Avatar
+                name={state.userInfo.userName}
+                src={state.userInfo.userImage}
+                size={"xs"}
+              />
+              <Box fontWeight={"semibold"}>{state.playlistDetail.owner}</Box>
+              <Box>{state.playlistDetail.tracks.length} songs,</Box>
+              <Box>総合時間</Box>
+            </HStack>
+          </VStack>
+        </HStack>
+        {state.playlistDetail.tracks.length > 0 && (
+          <>
+            <Button m={4} borderRadius={"50%"} h={50} w={50}>
+              <FaPlay />
+            </Button>
+            <ItemTable
+              isPlaylistCont={true}
+              itemlist={state.playlistDetail.tracks}
+            />
+          </>
+        )}
+      </Box>
+      <Box bgColor={"blackAlpha.700"} width="100wh" height="100vh">
+        <Tabs position="relative" variant="unstyled" color={"blue.100"} isLazy>
+          <TabList fontWeight={"bold"}>
+            <Tab>Search</Tab>
+            <Tab>Recommended</Tab>
+          </TabList>
+          <TabIndicator
+            mt="-1.5px"
+            height="2px"
+            bg="blue.800"
+            borderRadius="1px"
+          />
+          <TabPanels>
+            <TabPanel>
+              <SearchTab />
+            </TabPanel>
+            <TabPanel>
+              <RecommendedTab addedTracks={[]} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </Box>
   );
 };
