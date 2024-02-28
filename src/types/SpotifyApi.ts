@@ -1,31 +1,46 @@
-export type PlaylistData =  {
-  id: string,
-  name: string,
-  image: string
+export type PlaylistData = {
+  id: string;
+  name: string;
+  image: string;
 };
 
 export type PlaylistDetail = {
-  id: string,
-  name: string,
-  description: string,
-  owner: string,
-  image: string,
-  tracks: TrackData[]
-}
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  image: string;
+  tracks: TrackData[];
+};
 
-export type TrackData =  {
-  id: string,
-  name: string,
-  artists: any,
-  image: string,
-  duration: number,
-  albumName: string,
-  albumUri: string,
-  trackNumber: number
+export type TrackData = {
+  id: string;
+  name: string;
+  artists: any;
+  image: string;
+  duration: number;
+  albumName: string;
+  albumUri: string;
+  trackNumber: number;
 };
 
 export type UserInfo = {
-  userId: string,
-  userName: string,
-  userImage: string,
-}
+  userId: string;
+  userName: string;
+  userImage: string;
+};
+
+export type CreatePlaylistRequestBody = {
+  name: string;
+  description: string;
+  image: string;
+};
+
+export type CreatePlaylistRes = {
+  id: string;
+};
+
+export type AddItemsRequestBody = {
+  id: string;
+  uris: string[];
+};

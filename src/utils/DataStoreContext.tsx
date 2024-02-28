@@ -1,12 +1,11 @@
-import React, { FC, createContext, useReducer } from "react";
-import { pageCases, reducerCases } from "./Constants";
+import React, { FC, createContext, useContext, useReducer } from "react";
+import { reducerCases } from "./Constants";
 import { PlaylistData, PlaylistDetail, UserInfo } from "../types/SpotifyApi";
 
 // useReducerで生成する「参照用のstate」の型
 type DataStore = {
   token: string;
   playlists: PlaylistData[];
-  selectedPage: string;
   userInfo: UserInfo;
   playlistId: string;
   playlistDetail: PlaylistDetail;
@@ -43,12 +42,6 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
         playlists: action.payload,
       };
     }
-    case reducerCases.SET_PAGE: {
-      return {
-        ...state,
-        selectedPage: action.payload,
-      };
-    }
     case reducerCases.SET_USER: {
       return {
         ...state,
@@ -75,7 +68,6 @@ const reducerFunc = (state: DataStore, action: ReducerAction) => {
 const initialState: DataStore = {
   token: "",
   playlists: [],
-  selectedPage: pageCases.PLAYLIST_PAGE,
   userInfo: {
     userId: "",
     userName: "",
@@ -104,10 +96,11 @@ export const StoreContext = createContext({} as DataStoreContext);
 export const DataStoreContextProvider: FC<providerProps> = (props) => {
   // useReducerで生成した「参照用state」と「更新用dispatch」を、contextに渡す
   const [state, dispatch] = useReducer(reducerFunc, initialState);
-
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
       {props.children}
     </StoreContext.Provider>
   );
 };
+
+export const useStateProvider = () => useContext(StoreContext);

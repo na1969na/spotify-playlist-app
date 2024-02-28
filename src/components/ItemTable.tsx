@@ -14,9 +14,9 @@ import {
 import React from "react";
 import { TrackData } from "../types/SpotifyApi";
 
-type Props = { isPlaylistCont: boolean; itemlist: TrackData[] };
+type Props = { isPlaylistCont: boolean; itemList: TrackData[] };
 
-export const ItemTable: React.FC<Props> = ({ isPlaylistCont, itemlist }) => {
+export const ItemTable: React.FC<Props> = ({ isPlaylistCont, itemList }) => {
 
   const msToMinutesAndSeconds = (ms: number) => {
     var minutes = Math.floor(ms / 60000);
@@ -43,7 +43,7 @@ export const ItemTable: React.FC<Props> = ({ isPlaylistCont, itemlist }) => {
             </Thead>
           )}
           <Tbody>
-            {itemlist.map((item: TrackData, index: number) => {
+            {itemList.map((item: TrackData, index: number) => {
               return (
                 <Tr _hover={{ bg: "whiteAlpha.200" }}>
                   <Td p={"0.5rem"} textAlign={"start"}>

@@ -1,49 +1,54 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../utils/DataStoreContext";
-import { pageCases, reducerCases } from "../utils/Constants";
-import { Box, Text, HStack, Flex, Stack, Image } from "@chakra-ui/react";
-import axios from "axios";
-import { PlaylistData } from "../types/SpotifyApi";
+import React, { useEffect, useState } from "react";
+import { useStateProvider } from "../utils/DataStoreContext";
+import { reducerCases } from "../utils/Constants";
+import {
+  Box,
+  Text,
+  HStack,
+  Flex,
+  Stack,
+  Image,
+  useDisclosure,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+  Textarea,
+  ModalCloseButton,
+  ModalHeader,
+} from "@chakra-ui/react";
+import { CreatePlaylistRequestBody, PlaylistData } from "../types/SpotifyApi";
 import { SearchInput } from "./SearchInput";
 import { VscLibrary } from "react-icons/vsc";
 import { IoAdd } from "react-icons/io5";
+import { useAllPlaylists } from "../api/playlist/useAllPlaylists";
+import { useCreatePlaylist } from "../api/playlist/useCreatePlaylist";
 
 export const Sidebar: React.FC = () => {
-  const { state, dispatch } = useContext(StoreContext);
-  const [playlists, setPlaylists] = useState<PlaylistData[]>([]);
+  const { state, dispatch } = useStateProvider();
+  const { playlists } = state;
+  const { getPlaylists } = useAllPlaylists();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const [showPlaylists, setShowPlaylists] = useState<PlaylistData[]>([]);
+  const { createPlaylist } = useCreatePlaylist();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
-  useEffect(() => {
-    const getPlaylists = async () => {
-      const response = await axios.get(
-        "https://api.spotify.com/v1/me/playlists",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${state.token}`,
-          },
-        }
-      );
-      const { items } = response.data;
-      const playlists: PlaylistData[] = items.map((data: any) => {
-        return {
-          id: data.id,
-          name: data.name,
-          image: data.images[0].url,
-        };
-      });
-      dispatch({
-        type: reducerCases.SET_PLAYLISTS,
-        payload: playlists,
-      });
-      setPlaylists(playlists);
-    };
-    getPlaylists();
-    setPlaylists(state.playlists);
-
-    if (state.playlists.length > 0) {
-      getPlaylistDetail(state.playlists[0].id);
-    }
-  }, [dispatch, state.playlists, state.token]);
+  useEffect(
+    () => {
+      getPlaylists();
+      setShowPlaylists(playlists);
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const getPlaylistDetail = (id: string) =>
     dispatch({
@@ -51,11 +56,14 @@ export const Sidebar: React.FC = () => {
       payload: id,
     });
 
-  const createPlaylist = () =>
-    dispatch({
-      type: reducerCases.SET_PAGE,
-      payload: pageCases.CREATE_PAGE,
-    });
+  const onClickCreate = () => {
+    const requestBody: CreatePlaylistRequestBody = {
+      name: name,
+      description: description,
+      image: image,
+    };
+    createPlaylist(requestBody);
+  };
 
   return (
     <Flex
@@ -79,16 +87,16 @@ export const Sidebar: React.FC = () => {
           p="0.5rem"
           mb={2}
           _hover={{ cursor: "pointer", bg: "whiteAlpha.200" }}
-          onClick={createPlaylist}
+          onClick={onOpen}
         >
           <IoAdd size={"10%"} />
           <Text>Create a new playlist</Text>
         </HStack>
         <Stack>
-          <SearchInput setPlaylists={setPlaylists} />
+          <SearchInput setPlaylists={setShowPlaylists} />
         </Stack>
         <Box height="59%" overflowY={"auto"} mt={3}>
-          {playlists.map((playlist: PlaylistData) => {
+          {showPlaylists.map((playlist: PlaylistData) => {
             return (
               <HStack
                 borderRadius={5}
@@ -109,6 +117,44 @@ export const Sidebar: React.FC = () => {
           })}
         </Box>
       </Box>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent bgColor={"#373737"} color={"white"}>
+          <ModalHeader>Create a new playlist</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Playlist name</FormLabel>
+              <Input
+                ref={initialRef}
+                placeholder="Add a name"
+                isRequired
+                onChange={(e) => setName(e.target.value)}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                placeholder="Add an optional description"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button bgColor="blue.100" mr={3} onClick={onClickCreate}>
+              Create
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };

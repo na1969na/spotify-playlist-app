@@ -5,7 +5,7 @@ import { ItemTable } from './ItemTable'
 export const SearchTab: React.FC = () => {
   return (
     <div>
-      <ItemTable isPlaylistCont={false} itemlist={[]}/>
+      <ItemTable isPlaylistCont={false} itemList={[]}/>
     </div>
   )
 }

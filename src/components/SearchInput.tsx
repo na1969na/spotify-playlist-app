@@ -17,10 +17,10 @@ type Props = { setPlaylists: any };
 export const SearchInput: React.FC<Props> = ({ setPlaylists }) => {
   const { state } = useContext(StoreContext);
   const [inputValue, setInputValue] = useState<string>("");
-  const [showClearBtn, setshowClearBtn] = useState<boolean>(false);
+  const [showClearBtn, setShowClearBtn] = useState<boolean>(false);
 
-  const handleInputChange = (e: any) => {
-    setshowClearBtn(true);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setShowClearBtn(true);
     setInputValue(e.target.value);
     checkInputValue(e.target.value);
   };
@@ -29,20 +29,18 @@ export const SearchInput: React.FC<Props> = ({ setPlaylists }) => {
     if (value === "") {
       return;
     }
-
     const searchedItems: PlaylistData[] = state.playlists.filter(
       (playlist) =>
         playlist.name !== undefined &&
         playlist.name !== null &&
         playlist.name.toUpperCase().indexOf(value.toUpperCase()) !== -1
     );
-
     setPlaylists(searchedItems);
   };
 
   const showAll = () => {
     setPlaylists(state.playlists);
-    setshowClearBtn(false);
+    setShowClearBtn(false);
   };
 
   const clearText = (e: any) => (e.target.value = "");
