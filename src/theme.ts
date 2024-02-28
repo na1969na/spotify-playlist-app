@@ -12,8 +12,13 @@ const customTheme = extendTheme({
     },
     Input: {
       variants: {
-        focusBorderColor: "none",
-      }
+        outline: {
+          field: {
+            bgColor: "whiteAlpha.300",
+            border: "none",
+          },
+        },
+      },
     },
   },
   fonts: {

@@ -124,14 +124,19 @@ export const Sidebar: React.FC = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent bgColor={"#373737"} color={"white"}>
-          <ModalHeader>Create a new playlist</ModalHeader>
+        <ModalContent bg={"#181818"} color={"white"}>
+          <ModalHeader>
+            <Text bgClip="text" bgGradient="linear(to-r, teal.200, blue.800)">
+              Create a new playlist
+            </Text>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Playlist name</FormLabel>
               <Input
                 ref={initialRef}
+                _focus={{ boxShadow: "none" }}
                 placeholder="Add a name"
                 isRequired
                 onChange={(e) => setName(e.target.value)}
@@ -141,6 +146,10 @@ export const Sidebar: React.FC = () => {
             <FormControl mt={4}>
               <FormLabel>Description</FormLabel>
               <Textarea
+                bgColor="whiteAlpha.300"
+                border="none"
+                resize={"none"}
+                _focus={{ boxShadow: "none" }}
                 placeholder="Add an optional description"
                 onChange={(e) => setDescription(e.target.value)}
               />

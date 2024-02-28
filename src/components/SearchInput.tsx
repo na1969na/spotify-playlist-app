@@ -3,10 +3,7 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  IconButton,
-  InputRightAddon,
   InputRightElement,
-  Button,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { PlaylistData } from "../types/SpotifyApi";
@@ -53,10 +50,7 @@ export const SearchInput: React.FC<Props> = ({ setPlaylists }) => {
       />
       <Input
         placeholder="Search in My Library"
-        borderRadius={5}
-        bgColor={"#181818"}
-        border={"none"}
-        focusBorderColor="none"
+        _focus={{ boxShadow: "none"}}
         value={inputValue}
         onChange={handleInputChange}
         onBlur={showAll}

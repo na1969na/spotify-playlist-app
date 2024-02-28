@@ -14,18 +14,27 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  IconButton,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Portal,
 } from "@chakra-ui/react";
 import { ItemTable } from "./ItemTable";
 import { FaPlay } from "react-icons/fa";
 import { RecommendedTab } from "./RecommendedTab";
 import { SearchTab } from "./SearchTab";
 import { useSelectPlaylist } from "../api/playlist/useSelectPlaylist";
+import { SlOptions } from "react-icons/sl";
 
 export const Body: React.FC = () => {
   const { state } = useStateProvider();
   const { playlistDetail, userInfo } = state;
   const { onSelectPlaylist } = useSelectPlaylist();
- 
+
   useEffect(() => {
     onSelectPlaylist();
   }, [onSelectPlaylist]);
@@ -86,9 +95,24 @@ export const Body: React.FC = () => {
         </HStack>
         {playlistDetail.tracks.length > 0 && (
           <>
-            <Button m={4} borderRadius={"50%"} h={50} w={50}>
-              <FaPlay />
-            </Button>
+            <HStack>
+              <Button m={4} borderRadius={"50%"} h={50} w={50}>
+                <FaPlay />
+              </Button>
+              <Popover closeOnBlur={false} placement="bottom">
+                <PopoverTrigger>
+                  <IconButton icon={<SlOptions />} aria-label={"Open menu"} bg={"none"}/>
+                </PopoverTrigger>
+                <Portal>
+                  <PopoverContent bg={"#181818"} color="white" border={"none"}>
+                    <PopoverBody>
+                      <Box _hover={{ cursor: "pointer", bg: "whiteAlpha.200" }}>Edit details</Box>
+                      <Box _hover={{ cursor: "pointer", bg: "whiteAlpha.200" }}>Delete</Box>
+                    </PopoverBody>
+                  </PopoverContent>
+                </Portal>
+              </Popover>{" "}
+            </HStack>
             <ItemTable isPlaylistCont={true} itemList={playlistDetail.tracks} />
           </>
         )}

@@ -13,6 +13,7 @@ import {
   Avatar,
   Text,
   HStack,
+  Box,
 } from "@chakra-ui/react";
 import { StoreContext } from "../utils/DataStoreContext";
 import { reducerCases } from "../utils/Constants";
@@ -30,7 +31,7 @@ export const Navbar: React.FC = () => {
   return (
     <Stack direction="row">
       <Spacer />
-      <Popover closeOnBlur={false} placement="left">
+      <Popover closeOnBlur={false} placement="bottom">
         <PopoverTrigger>
           <Button
             m={4}
@@ -39,7 +40,7 @@ export const Navbar: React.FC = () => {
             backgroundImage={state.userInfo.userImage}
             backgroundSize={"100%"}
             _hover={{ cursor: "pointer", opacity: "0.7" }}
-          ></Button>
+          />
         </PopoverTrigger>
         <Portal>
           <PopoverContent bg={"#181818"} color="white" border={"none"}>
@@ -49,13 +50,11 @@ export const Navbar: React.FC = () => {
                 <Text>{state.userInfo.userName}</Text>
               </HStack>
             </PopoverHeader>
-            <PopoverCloseButton />
             <PopoverBody>
               <Button
                 w={"100%"}
                 border={"none"}
                 bg={"gray.400"}
-                onClick={onLogout}
                 as="a"
                 href="/"
               >
